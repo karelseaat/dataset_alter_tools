@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import os
 import sys
+from PIL import Image
 
 args = sys.argv
 if len(args) > 1:
@@ -24,7 +25,7 @@ for inx, tag in enumerate(root.find('tags')):
 
 for img in root.find('images'):
     newname = img.attrib['file'].split(".")[0]
-    print(newname + ".txt")
+    im = Image.open(img.attrib['file'])
     with open(newname + ".txt" , 'w') as writer:
         boxes = ""
         for box in img.findall('box'):
@@ -32,8 +33,14 @@ for img in root.find('images'):
             left = int(box.attrib['left'])
             width = int(box.attrib['width'])
             height = int(box.attrib['height'])
+
+            x = (left+(width/2))/im.size[0]
+            y = (top+(height/2))/im.size[1]
+            newwidth = width/im.size[0]
+            newheight = height/im.size[1]
+            
             blep = box.find('label')
-            boxes += f"{tags[blep.text]} {top-(height/2)} {left-(width/2)} {height} {width} \n"
+            boxes += f"{tags[blep.text]} {x:.5f} {y:.5f} {newwidth:.5f} {newheight:.5f} \n"
     
         writer.write(boxes)
         

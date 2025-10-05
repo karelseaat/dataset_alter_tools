@@ -22,16 +22,18 @@ else:
 files = os.listdir(imgpath)
 partcut = 9.1
 
-for file in files:
+for index, file in enumerate(files):
     print(file)
     # make sure file is an image
     if file.endswith(('.png')):
         im = Image.open(imgpath + '/' + file)
         width, height = im.size
-        left = width / partcut
-        top = height / partcut
-        right = (partcut-1) * width / partcut
-        bottom = (partcut-1) * height / partcut
-        im1 = im.crop((left, top, right, bottom))
 
-        im1.save(f"{imgpath}/cropped-{file}") 
+        new_height = 640
+        new_width  = int(new_height * width / height)
+
+
+        img2 = im.resize((new_width, new_height), Image.ANTIALIAS)
+        #img3 = img2.crop((300,0, 940, new_height))
+
+        img2.save(f"{imgpath}/{index}.png") 
