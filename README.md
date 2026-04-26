@@ -32,3 +32,7 @@ pip install pillow
 ```
 
 We hope this toolset will be beneficial in your machine learning projects. If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request. Enjoy coding! 💻
+
+## More from Karelseaat
+
+For more projects and experiments, visit my GitHub Pages site: [karelseaat.github.io](https://karelseaat.github.io/)
